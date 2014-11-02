@@ -104,7 +104,7 @@ fun! s:set_syntax(b, s)
     let orig_syntax = get(g:diminactive_orig_syntax, a:b, '')
     if len(orig_syntax)
       call s:Debug('Restoring orig_syntax', a:b, orig_syntax)
-      call setbufvar(a:b, '&syntax', orig_syntax)
+      call setbufvar(a:b, '&filetype', orig_syntax)
       call remove(g:diminactive_orig_syntax, a:b)
     else
       call s:Debug('set_syntax: nothing to restore!', a:b, orig_syntax)
@@ -114,11 +114,11 @@ fun! s:set_syntax(b, s)
     if orig_syntax
       call s:Debug('set_syntax: off: should be off already!', a:b, orig_syntax)
     else
-      let syntax = getbufvar(a:b, '&syntax')
-      if syntax != 'off'
+      let syntax = getbufvar(a:b, '&filetype')
+      if syntax != 'dimmed_pane'
         call s:Debug('set_syntax: storing', a:b, syntax)
         let g:diminactive_orig_syntax[a:b] = syntax
-        call setbufvar(a:b, '&syntax', 'off')
+        call setbufvar(a:b, '&filetype', 'dimmed_pane')
       else
         call s:Debug('set_syntax: already off!', a:b)
       endif
